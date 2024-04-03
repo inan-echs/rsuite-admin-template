@@ -16,10 +16,11 @@ import DrawerView from './DrawerView';
 import { mockUsers } from '@/data/mock';
 import { NameCell, ImageCell, CheckCell, ActionCell } from './Cells';
 
+
 const data = mockUsers(20);
 
 const { Column, HeaderCell, Cell } = Table;
-const { getHeight } = DOMHelper;
+const { getHeight } = DOMHelper;     
 
 const ratingList = Array.from({ length: 5 }).map((_, index) => {
   return {
@@ -102,17 +103,10 @@ const DataTable = () => {
     <>
       <Stack className="table-toolbar" justifyContent="space-between">
         <Button appearance="primary" onClick={() => setShowDrawer(true)}>
-          Add Member
+          Add Product
         </Button>
 
         <Stack spacing={6}>
-          <SelectPicker
-            label="Rating"
-            data={ratingList}
-            searchable={false}
-            value={rating}
-            onChange={setRating}
-          />
           <InputGroup inside>
             <Input placeholder="Search" value={searchKeyword} onChange={setSearchKeyword} />
             <InputGroup.Addon>
@@ -148,7 +142,7 @@ const DataTable = () => {
           <CheckCell dataKey="id" checkedKeys={checkedKeys} onChange={handleCheck} />
         </Column>
         <Column width={80} align="center">
-          <HeaderCell>Avatar</HeaderCell>
+          <HeaderCell> </HeaderCell>
           <ImageCell dataKey="avatar" />
         </Column>
 
@@ -157,30 +151,19 @@ const DataTable = () => {
           <NameCell dataKey="name" />
         </Column>
 
-        <Column width={230} sortable>
-          <HeaderCell>Skill Proficiency</HeaderCell>
-          <Cell style={{ padding: '10px 0' }} dataKey="progress">
-            {rowData => <Progress percent={rowData.progress} showInfo={false} />}
-          </Cell>
+        <Column width={120} sortable>
+          <HeaderCell>Unit</HeaderCell>
+          <Cell>PCS</Cell>
         </Column>
 
-        <Column width={100} sortable>
-          <HeaderCell>Rating</HeaderCell>
-          <Cell dataKey="rating">
-            {rowData =>
-              Array.from({ length: rowData.rating }).map((_, i) => <span key={i}>⭐️</span>)
-            }
-          </Cell>
+        <Column width={120} sortable>
+          <HeaderCell>Qty</HeaderCell>
+          <Cell dataKey="id"/>
         </Column>
 
-        <Column width={100} sortable>
-          <HeaderCell>Income</HeaderCell>
-          <Cell dataKey="amount">{rowData => `$${rowData.amount}`}</Cell>
-        </Column>
-
-        <Column width={300}>
-          <HeaderCell>Email</HeaderCell>
-          <Cell dataKey="email" />
+        <Column width={120} sortable>
+          <HeaderCell>Price</HeaderCell>
+          <Cell dataKey="amount">{rowData => `MVR ${rowData.amount}`}</Cell>
         </Column>
 
         <Column width={120}>

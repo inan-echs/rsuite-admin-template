@@ -1,13 +1,26 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, Button, Panel, IconButton, Stack, Divider } from 'rsuite';
 import { Link } from 'react-router-dom';
-import GithubIcon from '@rsuite/icons/legacy/Github';
-import FacebookIcon from '@rsuite/icons/legacy/Facebook';
-import GoogleIcon from '@rsuite/icons/legacy/Google';
-import WechatIcon from '@rsuite/icons/legacy/Wechat';
+import { UserLoginDto } from "d:/rsuite-admin-template/src/data/MyApi"
+import { Api } from "d:/rsuite-admin-template/src/data/MyApi"
+
 import Brand from '@/components/Brand';
+const api = new Api();
+api.baseUrl = "https://pos.echesconsultancy.com:10000";
 
 const SignUp = () => {
+  
+  const [username,SetUsername ] = useState('cashier');
+  const [password,SetPassword ] = useState('cashier@123');
+
+  const handleSubmit = async (e) =>
+  {
+      e.preventDefault();
+     const token = await api.auth.loginCreate({userName: username,password:password,tenant :"ClayCaffeTest"});   
+    console.log(token);
+
+  }
+
   return (
     <Stack
       justifyContent="center"
@@ -25,26 +38,24 @@ const SignUp = () => {
           <Link to="/sign-up"> Create an Account</Link>
         </p>
 
-        <Form fluid>
+        
+
+        <Form fluid onSubmit={handleSubmit}>
           <Form.Group>
             <Form.ControlLabel>Username or email address</Form.ControlLabel>
-            <Form.Control name="name" />
+            <Form.Control name="name" value={username} onChange={(e)=>SetUsername(e.target.value)}/>
           </Form.Group>
           <Form.Group>
             <Form.ControlLabel>
               <span>Password</span>
               <a style={{ float: 'right' }}>Forgot password?</a>
             </Form.ControlLabel>
-            <Form.Control name="name" type="password" />
+            <Form.Control name="name" type="password" value={password} onChange={(e)=>SetPassword(e.target.value)}/>
           </Form.Group>
           <Form.Group>
             <Stack spacing={6} divider={<Divider vertical />}>
-              <Button appearance="primary">Sign in</Button>
+              <Button appearance="primary" onClick={handleSubmit}>Sign in</Button>
               <Stack spacing={6}>
-                <IconButton icon={<WechatIcon />} appearance="subtle" />
-                <IconButton icon={<GithubIcon />} appearance="subtle" />
-                <IconButton icon={<FacebookIcon />} appearance="subtle" />
-                <IconButton icon={<GoogleIcon />} appearance="subtle" />
               </Stack>
             </Stack>
           </Form.Group>

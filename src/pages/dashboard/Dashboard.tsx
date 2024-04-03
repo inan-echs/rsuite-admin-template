@@ -36,7 +36,7 @@ const Dashboard = () => {
         <Col xs={8}>
           <Panel className="trend-box bg-gradient-red">
             <img className="chart-img" src={images.PVIcon} />
-            <div className="title">Page Views </div>
+            <div className="title">Product Views </div>
             <div className="value">281,358</div>
           </Panel>
         </Col>
@@ -59,7 +59,7 @@ const Dashboard = () => {
       <Row gutter={30}>
         <Col xs={16}>
           <BarChart
-            title="Traffic Summary"
+            title="Sales Summary"
             actions={
               <ButtonGroup>
                 <Button active>Day</Button>
@@ -112,7 +112,7 @@ const Dashboard = () => {
         </Col>
         <Col xs={8}>
           <PieChart
-            title="Traffic Sources"
+            title="Sales Sources"
             data={[112332, 123221, 432334, 342334, 133432]}
             type="donut"
             labels={['Direct', 'Internal', 'Referrals', 'Search Engines', 'Other']}

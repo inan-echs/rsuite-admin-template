@@ -2,18 +2,18 @@ import { faker } from '@faker-js/faker/locale/en';
 
 export function mockUsers(length: number) {
   const createRowData = rowIndex => {
-    const firstName = faker.name.firstName();
-    const lastName = faker.name.lastName();
+    const firstName = faker.commerce.productName();
+    const lastName = '';
     const gender = faker.name.gender(true) as 'female' | 'male';
     const name = faker.name.findName(firstName, lastName, gender);
-    const avatar = faker.image.avatar();
+    const avatar = faker.image.business();
 
     const city = faker.address.city();
     const street = faker.address.street();
     const email = faker.internet.email();
     const postcode = faker.address.zipCode();
     const phone = faker.phone.number();
-    const amount = faker.finance.amount(1000, 90000);
+    const amount = faker.finance.amount(100, 1000);
 
     const age = Math.floor(Math.random() * 30) + 18;
     const stars = Math.floor(Math.random() * 10000);

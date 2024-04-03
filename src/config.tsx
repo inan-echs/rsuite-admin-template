@@ -12,12 +12,6 @@ export const appNavs = [
     to: '/dashboard'
   },
   {
-    eventKey: 'calendar',
-    icon: <Icon as={VscCalendar} />,
-    title: 'Calendar',
-    to: '/calendar'
-  },
-  {
     eventKey: 'tables',
     icon: <Icon as={VscTable} />,
     title: 'Tables',
@@ -25,12 +19,12 @@ export const appNavs = [
     children: [
       {
         eventKey: 'members',
-        title: 'Members',
+        title: 'Products',
         to: '/table-members'
       },
       {
         eventKey: 'virtualized',
-        title: 'Virtualized Table',
+        title: 'Customers',
         to: '/table-virtualized'
       }
     ]

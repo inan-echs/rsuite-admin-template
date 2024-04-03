@@ -8,11 +8,11 @@ const Page = () => {
     <Panel
       header={
         <>
-          <h3 className="title">Virtualized Table</h3>
+          <h3 className="title">Customers</h3>
           <Breadcrumb>
             <Breadcrumb.Item href="/">Home</Breadcrumb.Item>
             <Breadcrumb.Item>Tables</Breadcrumb.Item>
-            <Breadcrumb.Item active>Virtualized Table</Breadcrumb.Item>
+            <Breadcrumb.Item active>Customers</Breadcrumb.Item>
           </Breadcrumb>
         </>
       }
