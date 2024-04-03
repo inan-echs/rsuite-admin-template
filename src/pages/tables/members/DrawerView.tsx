@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import {
   Drawer,
   DrawerProps,
@@ -11,8 +12,55 @@ import {
   Rate
 } from 'rsuite';
 
+interface FormValues {
+  firstname: string;
+  lastname: string;
+  email: string;
+  city: string;
+  street: string;
+  rating: number;
+  skill: number;
+  income: number;
+}
+
 const DrawerView = (props: DrawerProps) => {
   const { onClose, ...rest } = props;
+  const [formValue, setFormValue] = useState<FormValues>({
+    firstname: '',
+    lastname: '',
+    email: '',
+    city: '',
+    street: '',
+    rating: 0,
+    skill: 0,
+    income: 0
+  });
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    fetch('https://pos.echesconsultancy.com:10000/MasterData/AddItem', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formValue)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('success', data);
+        // Handle success, e.g., close the drawer or show a success message
+      })
+      .catch(error => {
+        console.error('Error', error);
+        // Handle error, e.g., show an error message
+      });
+  };
+
   return (
     <Drawer backdrop="static" size="sm" placement="right" onClose={onClose} {...rest}>
       <Drawer.Header>
@@ -28,7 +76,7 @@ const DrawerView = (props: DrawerProps) => {
       </Drawer.Header>
 
       <Drawer.Body>
-        <Form fluid>
+        <Form fluid onSubmit={handleSubmit} formValue={formValue} onChange={setFormValue}>
           <Stack justifyContent="space-between" style={{ marginBottom: 20 }}>
             <Form.Group>
               <Form.ControlLabel>First Name</Form.ControlLabel>

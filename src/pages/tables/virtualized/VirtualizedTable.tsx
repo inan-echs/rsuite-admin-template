@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { DOMHelper, Table } from 'rsuite';
 import { mockUsers } from '@/data/mock';
 
@@ -7,7 +8,31 @@ const { getHeight } = DOMHelper;
 
 const data = mockUsers(1000);
 
+interface Datatype {
+  CardCode: string;
+  CardName: string;
+  VatStatus: string;
+  Phone1: string;
+  CardType: string;
+  ListNum: string;
+}
+
 const VirtualizedTable = () => {
+  const [customer, setCustomer] = useState<Datatype[]>([]);
+
+  useEffect(() => {
+    fetch('https://pos.echesconsultancy.com:10000/FbPos/ListCustomers')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => setCustomer(data))
+      .catch(error => {
+        console.error('There has been a problem with your fetch operation:', error);
+      });
+  }, []);
   return (
     <Table
       virtualized
@@ -16,32 +41,32 @@ const VirtualizedTable = () => {
       translate3d={false}
     >
       <Column width={70} align="center" fixed>
-        <HeaderCell>Id</HeaderCell>
+        <HeaderCell>Card Id</HeaderCell>
         <Cell dataKey="id" />
       </Column>
 
       <Column width={130}>
-        <HeaderCell>First Name</HeaderCell>
+        <HeaderCell>Name</HeaderCell>
         <Cell dataKey="firstName" />
       </Column>
 
       <Column width={130}>
-        <HeaderCell>Last Name</HeaderCell>
+        <HeaderCell>Vat Status</HeaderCell>
         <Cell dataKey="lastName" />
       </Column>
 
       <Column width={100}>
-        <HeaderCell>Gender</HeaderCell>
+        <HeaderCell>Card type</HeaderCell>
         <Cell dataKey="gender" />
       </Column>
 
       <Column width={100}>
-        <HeaderCell>Age</HeaderCell>
+        <HeaderCell>List num</HeaderCell>
         <Cell dataKey="age" />
       </Column>
 
       <Column width={200}>
-        <HeaderCell>City</HeaderCell>
+        <HeaderCell>Address</HeaderCell>
         <Cell dataKey="city" />
       </Column>
 
