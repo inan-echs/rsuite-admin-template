@@ -8,6 +8,10 @@ import {
   Stack,
   InputNumber,
   InputGroup,
+  useToaster,
+  Message,
+  Notification,
+  Checkbox
 } from 'rsuite';
 
 interface FormValues {
@@ -25,8 +29,10 @@ const DrawerView = (props: DrawerProps) => {
     ItemName: '',
     ItemDesc: '',
     GSTInclusivePrice: true,
-    Price: 0.00
+    Price: 0.0
   });
+
+  const toaster = useToaster();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -45,13 +51,16 @@ const DrawerView = (props: DrawerProps) => {
       })
       .then(data => {
         console.log('success', data);
-        // Handle success, e.g., close the drawer or show a success message
-        onClose
+        toaster.push(<Notification type="success">Item added successfully</Notification>);
+        console.log('success');
+        onClose();
       })
       .catch(error => {
         console.error('Error', error);
-        // Handle error, e.g., show an error message
-        //show error via https://rsuitejs.com/components/notification/
+        toaster.push(
+          <Notification type="error">There was an error during the process</Notification>
+        );
+        console.log('failed');
       });
   };
 
@@ -60,7 +69,7 @@ const DrawerView = (props: DrawerProps) => {
       <Drawer.Header>
         <Drawer.Title>Add a new product</Drawer.Title>
         <Drawer.Actions>
-          <Button onClick={onClose} appearance="primary">
+          <Button onClick={handleSubmit} appearance="primary">
             Confirm
           </Button>
           <Button onClick={onClose} appearance="subtle">
@@ -68,6 +77,8 @@ const DrawerView = (props: DrawerProps) => {
           </Button>
         </Drawer.Actions>
       </Drawer.Header>
+
+      {/* onSubmit={handleSubmit} */}
 
       <Drawer.Body>
         <Form fluid onSubmit={handleSubmit} formValue={formValue} onChange={setFormValue}>
@@ -83,12 +94,19 @@ const DrawerView = (props: DrawerProps) => {
           </Stack>
           <Form.Group>
             <Form.ControlLabel>ItemDesc</Form.ControlLabel>
-            <Form.Control name="ItemDesc"  />
+            <Form.Control name="ItemDesc" />
           </Form.Group>
 
-          {/* add checkbox here for GSTInclusivePrice
-          https://rsuitejs.com/components/checkbox/ */}
-
+          <Form.Group>
+            <Form.ControlLabel>GST Inclusive Price</Form.ControlLabel>
+            <Checkbox
+              name="GSTInclusivePrice"
+              checked={formValue.GSTInclusivePrice}
+              onChange={value => setFormValue({ ...formValue, GSTInclusivePrice: value })}
+            >
+              GST Inclusive
+            </Checkbox>
+          </Form.Group>
 
           <Form.Group>
             <Form.ControlLabel>Price</Form.ControlLabel>
