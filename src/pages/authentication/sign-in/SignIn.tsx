@@ -1,27 +1,50 @@
 import React, { useState } from 'react';
-import { Form, Button, Panel, IconButton, Stack, Divider } from 'rsuite';
+import { Form, Button, Panel, IconButton, Stack, Divider, Notification, useToaster } from 'rsuite';
 import { Link } from 'react-router-dom';
-// import { UserLoginDto } from 'd:/rsuite-admin-template/src/data/MyApi';
-// import { Api } from "d:/rsuite-admin-template/src/data/MyApi"
-
 import Brand from '@/components/Brand';
-// const api = new Api();
-// api.baseUrl = 'https://pos.echesconsultancy.com:10000';
+
+interface Login {
+  userName: string;
+  password: string;
+  tenant: string;
+}
 
 const SignUp = () => {
-  // Ummm...bro, your code aint wrong, but your implementation off
-  // const [username, SetUsername] = useState('cashier');
-  // const [password, SetPassword] = useState('cashier@123');
+  const [details, setDetails] = useState<Login>({
+    userName: '',
+    password: '',
+    tenant: 'string'
+  });
 
-  // const handleSubmit = async e => {
-  //   e.preventDefault();
-  //   const token = await api.auth.loginCreate({
-  //     userName: username,
-  //     password: password,
-  //     tenant: 'ClayCaffeTest'
-  //   });
-  //   console.log(token);
-  // };
+  const toaster = useToaster();
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    fetch('https://pos.echesconsultancy.com:10000/Auth/Login', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(details)
+    })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response error');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('success', data);
+        localStorage.setItem('token', data.token);
+        toaster.push(<Notification type="success">You have been signed in</Notification>);
+        console.log('success');
+      })
+      .catch(error => {
+        console.error('Error', error);
+        toaster.push(<Notification type="error">Auth fail</Notification>);
+        console.log('failed');
+      });
+  };
 
   return (
     <Stack
@@ -40,26 +63,17 @@ const SignUp = () => {
           <Link to="/sign-up"> Create an Account</Link>
         </p>
 
-        <Form fluid onSubmit={handleSubmit}>
+        <Form fluid onSubmit={handleSubmit} formValue={details} onChange={setDetails}>
           <Form.Group>
             <Form.ControlLabel>Username or email address</Form.ControlLabel>
-            <Form.Control
-              name="name"
-              value={username}
-              onChange={e => SetUsername(e.target.value)}
-            />
+            <Form.Control name="userName" />
           </Form.Group>
           <Form.Group>
             <Form.ControlLabel>
               <span>Password</span>
               <a style={{ float: 'right' }}>Forgot password?</a>
             </Form.ControlLabel>
-            <Form.Control
-              name="name"
-              type="password"
-              value={password}
-              onChange={e => SetPassword(e.target.value)}
-            />
+            <Form.Control name="password" type="password" />
           </Form.Group>
           <Form.Group>
             <Stack spacing={6} divider={<Divider vertical />}>

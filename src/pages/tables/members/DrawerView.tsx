@@ -78,8 +78,6 @@ const DrawerView = (props: DrawerProps) => {
         </Drawer.Actions>
       </Drawer.Header>
 
-      {/* onSubmit={handleSubmit} */}
-
       <Drawer.Body>
         <Form fluid onSubmit={handleSubmit} formValue={formValue} onChange={setFormValue}>
           <Stack justifyContent="space-between" style={{ marginBottom: 20 }}>
