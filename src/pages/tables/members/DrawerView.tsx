@@ -8,32 +8,24 @@ import {
   Stack,
   InputNumber,
   InputGroup,
-  Slider,
-  Rate
 } from 'rsuite';
 
 interface FormValues {
-  firstname: string;
-  lastname: string;
-  email: string;
-  city: string;
-  street: string;
-  rating: number;
-  skill: number;
-  income: number;
+  ItemCode: string;
+  ItemName: string;
+  ItemDesc: string;
+  GSTInclusivePrice: boolean;
+  Price: number;
 }
 
 const DrawerView = (props: DrawerProps) => {
   const { onClose, ...rest } = props;
   const [formValue, setFormValue] = useState<FormValues>({
-    firstname: '',
-    lastname: '',
-    email: '',
-    city: '',
-    street: '',
-    rating: 0,
-    skill: 0,
-    income: 0
+    ItemCode: '',
+    ItemName: '',
+    ItemDesc: '',
+    GSTInclusivePrice: true,
+    Price: 0.00
   });
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -54,10 +46,12 @@ const DrawerView = (props: DrawerProps) => {
       .then(data => {
         console.log('success', data);
         // Handle success, e.g., close the drawer or show a success message
+        onClose
       })
       .catch(error => {
         console.error('Error', error);
         // Handle error, e.g., show an error message
+        //show error via https://rsuitejs.com/components/notification/
       });
   };
 
@@ -79,42 +73,28 @@ const DrawerView = (props: DrawerProps) => {
         <Form fluid onSubmit={handleSubmit} formValue={formValue} onChange={setFormValue}>
           <Stack justifyContent="space-between" style={{ marginBottom: 20 }}>
             <Form.Group>
-              <Form.ControlLabel>First Name</Form.ControlLabel>
-              <Form.Control name="firstname" style={{ width: 200 }} />
+              <Form.ControlLabel>Item Code</Form.ControlLabel>
+              <Form.Control name="ItemCode" style={{ width: 200 }} />
             </Form.Group>
             <Form.Group>
-              <Form.ControlLabel>Last Name</Form.ControlLabel>
-              <Form.Control name="lastname" style={{ width: 200 }} />
+              <Form.ControlLabel>Item Name</Form.ControlLabel>
+              <Form.Control name="ItemName" style={{ width: 200 }} />
             </Form.Group>
           </Stack>
           <Form.Group>
-            <Form.ControlLabel>Email</Form.ControlLabel>
-            <Form.Control name="email" type="email" />
-          </Form.Group>
-          <Form.Group>
-            <Form.ControlLabel>City</Form.ControlLabel>
-            <Form.Control name="city" />
-          </Form.Group>
-          <Form.Group>
-            <Form.ControlLabel>Street</Form.ControlLabel>
-            <Form.Control name="street" />
+            <Form.ControlLabel>ItemDesc</Form.ControlLabel>
+            <Form.Control name="ItemDesc"  />
           </Form.Group>
 
-          <Form.Group>
-            <Form.ControlLabel>Rating</Form.ControlLabel>
-            <Form.Control name="rating" accepter={Rate} />
-          </Form.Group>
+          {/* add checkbox here for GSTInclusivePrice
+          https://rsuitejs.com/components/checkbox/ */}
+
 
           <Form.Group>
-            <Form.ControlLabel>Skill Proficiency</Form.ControlLabel>
-            <Form.Control name="skill" accepter={Slider} progress />
-          </Form.Group>
-
-          <Form.Group>
-            <Form.ControlLabel>Income</Form.ControlLabel>
+            <Form.ControlLabel>Price</Form.ControlLabel>
             <InputGroup style={{ width: '100%' }}>
               <InputGroup.Addon>$</InputGroup.Addon>
-              <Form.Control name="income" accepter={InputNumber} style={{ width: '100%' }} />
+              <Form.Control name="Price" accepter={InputNumber} style={{ width: '100%' }} />
             </InputGroup>
           </Form.Group>
         </Form>

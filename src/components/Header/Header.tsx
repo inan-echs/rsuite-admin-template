@@ -14,8 +14,7 @@ import {
 import NoticeIcon from '@rsuite/icons/Notice';
 import GearIcon from '@rsuite/icons/Gear';
 import HelpOutlineIcon from '@rsuite/icons/HelpOutline';
-import GithubIcon from '@rsuite/icons/legacy/Github';
-import HeartIcon from '@rsuite/icons/legacy/HeartO';
+
 
 const renderAdminSpeaker = ({ onClose, left, top, className }: any, ref) => {
   const handleSelect = eventKey => {
