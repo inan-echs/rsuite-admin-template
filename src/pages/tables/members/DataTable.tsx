@@ -5,16 +5,14 @@ import {
   Table,
   Button,
   DOMHelper,
-  Progress,
   Checkbox,
-  Stack,
-  SelectPicker
+  Stack, 
 } from 'rsuite';
 import SearchIcon from '@rsuite/icons/Search';
 import MoreIcon from '@rsuite/icons/legacy/More';
 import DrawerView from './DrawerView';
 import { mockUsers } from '@/data/mock';
-import { NameCell, ImageCell, CheckCell, ActionCell } from './Cells';
+import { NameCell, CheckCell, ActionCell } from './Cells';
 
 
 const data = mockUsers(20);
@@ -22,14 +20,7 @@ const data = mockUsers(20);
 const { Column, HeaderCell, Cell } = Table;
 const { getHeight } = DOMHelper;     
 
-const ratingList = Array.from({ length: 5 }).map((_, index) => {
-  return {
-    value: index + 1,
-    label: Array.from({ length: index + 1 })
-      .map(() => '⭐️')
-      .join('')
-  };
-});
+
 
 const DataTable = () => {
   const [showDrawer, setShowDrawer] = useState(false);
@@ -37,7 +28,6 @@ const DataTable = () => {
   const [sortColumn, setSortColumn] = useState();
   const [sortType, setSortType] = useState();
   const [searchKeyword, setSearchKeyword] = useState('');
-  const [rating, setRating] = useState<number | null>(null);
 
   let checked = false;
   let indeterminate = false;
@@ -69,11 +59,6 @@ const DataTable = () => {
       if (!item.name.includes(searchKeyword)) {
         return false;
       }
-
-      if (rating && item.rating !== rating) {
-        return false;
-      }
-
       return true;
     });
 
@@ -124,8 +109,8 @@ const DataTable = () => {
         onSortColumn={handleSortColumn}
       >
         <Column width={50} align="center" fixed>
-          <HeaderCell>Id</HeaderCell>
-          <Cell dataKey="id" />
+          <HeaderCell>ItemCode</HeaderCell>
+          <Cell dataKey="ItemCode" />
         </Column>
 
         <Column width={50} fixed>
@@ -141,29 +126,15 @@ const DataTable = () => {
           </HeaderCell>
           <CheckCell dataKey="id" checkedKeys={checkedKeys} onChange={handleCheck} />
         </Column>
-        <Column width={80} align="center">
-          <HeaderCell> </HeaderCell>
-          <ImageCell dataKey="avatar" />
-        </Column>
 
         <Column minWidth={160} flexGrow={1} sortable>
           <HeaderCell>Name</HeaderCell>
-          <NameCell dataKey="name" />
-        </Column>
-
-        <Column width={120} sortable>
-          <HeaderCell>Unit</HeaderCell>
-          <Cell>PCS</Cell>
-        </Column>
-
-        <Column width={120} sortable>
-          <HeaderCell>Qty</HeaderCell>
-          <Cell dataKey="id"/>
+          <NameCell dataKey="ItemName" />
         </Column>
 
         <Column width={120} sortable>
           <HeaderCell>Price</HeaderCell>
-          <Cell dataKey="amount">{rowData => `MVR ${rowData.amount}`}</Cell>
+          <Cell dataKey="Price">{rowData => `MVR ${rowData.amount}`}</Cell>
         </Column>
 
         <Column width={120}>

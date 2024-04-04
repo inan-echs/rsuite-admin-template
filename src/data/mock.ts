@@ -2,10 +2,10 @@ import { faker } from '@faker-js/faker/locale/en';
 
 export function mockUsers(length: number) {
   const createRowData = rowIndex => {
-    const firstName = faker.commerce.productName();
+    const ItemName = faker.commerce.productName();
     const lastName = '';
     const gender = faker.name.gender(true) as 'female' | 'male';
-    const name = faker.name.findName(firstName, lastName, gender);
+    const name = faker.name.findName(ItemName, lastName, gender);
     const avatar = faker.image.business();
 
     const city = faker.address.city();
@@ -13,7 +13,7 @@ export function mockUsers(length: number) {
     const email = faker.internet.email();
     const postcode = faker.address.zipCode();
     const phone = faker.phone.number();
-    const amount = faker.finance.amount(100, 1000);
+    const Price = faker.finance.amount(100, 1000);
 
     const age = Math.floor(Math.random() * 30) + 18;
     const stars = Math.floor(Math.random() * 10000);
@@ -24,7 +24,7 @@ export function mockUsers(length: number) {
     return {
       id: rowIndex + 1,
       name,
-      firstName,
+      ItemName,
       lastName,
       avatar,
       city,
@@ -38,7 +38,7 @@ export function mockUsers(length: number) {
       followers,
       rating,
       progress,
-      amount
+      Price
     };
   };
 

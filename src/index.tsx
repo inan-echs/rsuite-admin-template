@@ -5,9 +5,6 @@ import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 
 import './styles/index.less';
-// what you trying to pull here 😭
-// export const api = new Api();
-// api.baseUrl = 'https://pos.echesconsultancy.com:10000';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
