@@ -21,7 +21,20 @@ const VirtualizedTable = () => {
   const [customer, setCustomer] = useState<Datatype[]>([]);
 
   useEffect(() => {
-    fetch('https://pos.echesconsultancy.com:10000/FbPos/ListCustomers')
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      console.error('No jwt token, please reauthenticate');
+      return;
+    }
+    const requestOptions = {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    };
+    fetch('https://pos.echesconsultancy.com:10000/FbPos/ListCustomers', requestOptions)
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
