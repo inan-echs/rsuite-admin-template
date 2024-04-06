@@ -1,14 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import {
-  Drawer,
-  DrawerProps,
-  Button,
-  Form,
-  Stack,
-  InputNumber,
-  InputGroup,
-} from 'rsuite';
+import { Drawer, DrawerProps, Button, Form, Stack, InputNumber, InputGroup } from 'rsuite';
 
 interface FormValues {
   ItemCode: string;
@@ -19,7 +11,7 @@ interface FormValues {
 }
 
 //basically make this take a FormValues as input and have those values be shown
-//once 
+//once
 const DrawerEditView = (props: DrawerProps) => {
   const { onClose, ...rest } = props;
   const [formValue, setFormValue] = useState<FormValues>({
@@ -27,10 +19,8 @@ const DrawerEditView = (props: DrawerProps) => {
     ItemName: '',
     ItemDesc: '',
     GSTInclusivePrice: true,
-    Price: 0.00
+    Price: 0.0
   });
-
-
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -52,7 +42,7 @@ const DrawerEditView = (props: DrawerProps) => {
       .then(data => {
         console.log('success', data);
         // Handle success, e.g., close the drawer or show a success message
-        onClose
+        onClose;
       })
       .catch(error => {
         console.error('Error', error);
@@ -89,12 +79,11 @@ const DrawerEditView = (props: DrawerProps) => {
           </Stack>
           <Form.Group>
             <Form.ControlLabel>ItemDesc</Form.ControlLabel>
-            <Form.Control name="ItemDesc"  />
+            <Form.Control name="ItemDesc" />
           </Form.Group>
 
           {/* add checkbox here for GSTInclusivePrice
           https://rsuitejs.com/components/checkbox/ */}
-
 
           <Form.Group>
             <Form.ControlLabel>Price</Form.ControlLabel>
