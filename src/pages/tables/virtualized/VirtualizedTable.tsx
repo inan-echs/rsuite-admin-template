@@ -21,7 +21,8 @@ const VirtualizedTable = () => {
   const [customer, setCustomer] = useState<Datatype[]>([]);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    // const token = localStorage.getItem('token');
+    const token = process.env.TempJWt;
 
     if (!token) {
       console.error('No jwt token, please reauthenticate');
