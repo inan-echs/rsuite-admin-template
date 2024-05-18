@@ -1,12 +1,15 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import { DOMHelper, Table } from 'rsuite';
-import { mockUsers } from '@/data/mock';
+// import { mockUsers } from '@/data/mock';
+import { config } from 'dotenv';
 
 const { Column, HeaderCell, Cell } = Table;
 const { getHeight } = DOMHelper;
 
-const data = mockUsers(1000);
+// const data = mockUsers(1000);
+
+config();
 
 interface Datatype {
   CardCode: string;
@@ -18,11 +21,12 @@ interface Datatype {
 }
 
 const VirtualizedTable = () => {
-  const [customer, setCustomer] = useState<Datatype[]>([]);
+  const [customer, setCustomer] = useState<Datatype>();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // const token = localStorage.getItem('token');
-    const token = process.env.TempJWt;
+    const token = process.env.REACT_APP_TEMP_JWT;
 
     if (!token) {
       console.error('No jwt token, please reauthenticate');
@@ -42,53 +46,63 @@ const VirtualizedTable = () => {
         }
         return response.json();
       })
-      .then(data => setCustomer(data))
+      .then(fetchedData => {
+        setCustomer(fetchedData);
+        setLoading(false);
+      })
       .catch(error => {
         console.error('There has been a problem with your fetch operation:', error);
+        setLoading(false);
       });
   }, []);
   return (
-    <Table
-      virtualized
-      height={Math.max(getHeight(window) - 120, 400)}
-      data={data}
-      translate3d={false}
-    >
-      <Column width={70} align="center" fixed>
-        <HeaderCell>Card Id</HeaderCell>
-        <Cell dataKey="id" />
-      </Column>
+    <>
+      {loading ? (
+        <div>Loading....</div>
+      ) : (
+        <Table
+          virtualized
+          height={Math.max(getHeight(window) - 120, 400)}
+          data={customer}
+          translate3d={false}
+        >
+          <Column width={70} align="center" fixed>
+            <HeaderCell>Card Id</HeaderCell>
+            <Cell dataKey="id" />
+          </Column>
 
-      <Column width={130}>
-        <HeaderCell>Name</HeaderCell>
-        <Cell dataKey="firstName" />
-      </Column>
+          <Column width={130}>
+            <HeaderCell>Name</HeaderCell>
+            <Cell dataKey="firstName" />
+          </Column>
 
-      <Column width={130}>
-        <HeaderCell>Vat Status</HeaderCell>
-        <Cell dataKey="lastName" />
-      </Column>
+          <Column width={130}>
+            <HeaderCell>Vat Status</HeaderCell>
+            <Cell dataKey="lastName" />
+          </Column>
 
-      <Column width={100}>
-        <HeaderCell>Card type</HeaderCell>
-        <Cell dataKey="gender" />
-      </Column>
+          <Column width={100}>
+            <HeaderCell>Card type</HeaderCell>
+            <Cell dataKey="gender" />
+          </Column>
 
-      <Column width={100}>
-        <HeaderCell>List num</HeaderCell>
-        <Cell dataKey="age" />
-      </Column>
+          <Column width={100}>
+            <HeaderCell>List num</HeaderCell>
+            <Cell dataKey="age" />
+          </Column>
 
-      <Column width={200}>
-        <HeaderCell>Address</HeaderCell>
-        <Cell dataKey="city" />
-      </Column>
+          <Column width={200}>
+            <HeaderCell>Address</HeaderCell>
+            <Cell dataKey="city" />
+          </Column>
 
-      <Column minWidth={200} flexGrow={1}>
-        <HeaderCell>Email</HeaderCell>
-        <Cell dataKey="email" />
-      </Column>
-    </Table>
+          <Column minWidth={200} flexGrow={1}>
+            <HeaderCell>Email</HeaderCell>
+            <Cell dataKey="email" />
+          </Column>
+        </Table>
+      )}
+    </>
   );
 };
 
