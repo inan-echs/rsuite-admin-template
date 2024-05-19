@@ -2,14 +2,14 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { DOMHelper, Table } from 'rsuite';
 // import { mockUsers } from '@/data/mock';
-import { config } from 'dotenv';
+// import { config } from 'dotenv';
 
 const { Column, HeaderCell, Cell } = Table;
 const { getHeight } = DOMHelper;
 
 // const data = mockUsers(1000);
 
-config();
+// config();
 
 interface Datatype {
   CardCode: string;
