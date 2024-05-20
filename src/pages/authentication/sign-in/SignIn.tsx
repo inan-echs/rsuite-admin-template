@@ -13,7 +13,7 @@ const SignUp = () => {
   const [details, setDetails] = useState<Login>({
     userName: '',
     password: '',
-    tenant: 'string'
+    tenant: 'posdemo'
   });
 
   const toaster = useToaster();
@@ -36,6 +36,7 @@ const SignUp = () => {
       .then(data => {
         console.log('success', data);
         localStorage.setItem('token', data.token);
+        localStorage.setItem('userId', data.userId);
         toaster.push(<Notification type="success">You have been signed in</Notification>);
         console.log('success');
       })
