@@ -26,8 +26,7 @@ const App = () => {
       <CustomProvider locale={enGB}>
         <Routes>
           <Route path="/" element={<Frame navs={appNavs} />}>
-            <Route index element={<DashboardPage />} />
-            <Route path="dashboard" element={<DashboardPage />} />
+            <Route index element={<SignInPage />} />
             <Route path="table-members" element={<MembersPage />} />
             <Route path="table-virtualized" element={<VirtualizedTablePage />} />
             <Route path="error-404" element={<Error404Page />} />
@@ -35,10 +34,7 @@ const App = () => {
             <Route path="error-500" element={<Error500Page />} />
             <Route path="error-503" element={<Error503Page />} />
             <Route path="sign-in" element={<SignInPage />} />
-            <Route path="sign-up" element={<SignUpPage />} />
-            <Route path="form-basic" element={<FormBasicPage />} />
-            <Route path="form-wizard" element={<FormWizardPage />} />
-            <Route path="calendar" element={<CalendarPage />} />
+       
           </Route>
           <Route path="*" element={<Error404Page />} />
         </Routes>

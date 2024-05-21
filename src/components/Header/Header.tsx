@@ -119,7 +119,7 @@ const Header = () => {
   return (
     <Stack className="header" spacing={8}>
  
-
+{/* 
       <Whisper placement="bottomEnd" trigger="click" ref={trigger} speaker={renderNoticeSpeaker}>
         <IconButton
           icon={
@@ -132,9 +132,9 @@ const Header = () => {
 
       <Whisper placement="bottomEnd" trigger="click" ref={trigger} speaker={renderSettingSpeaker}>
         <IconButton icon={<GearIcon style={{ fontSize: 20 }} />} />
-      </Whisper>
+      </Whisper> */}
 
-      <Whisper placement="bottomEnd" trigger="click" ref={trigger} speaker={renderAdminSpeaker}>
+      {/* <Whisper placement="bottomEnd" trigger="click" ref={trigger} speaker={renderAdminSpeaker}>
         <Avatar
           size="sm"
           circle
@@ -142,7 +142,7 @@ const Header = () => {
           alt="@simonguo"
           style={{ marginLeft: 8 }}
         />
-      </Whisper>
+      </Whisper> */}
     </Stack>
   );
 };
