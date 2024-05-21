@@ -13,7 +13,7 @@ import Error503Page from './pages/authentication/503';
 
 import SignInPage from './pages/authentication/sign-in';
 import SignUpPage from './pages/authentication/sign-up';
-import MembersPage from './pages/tables/members';
+import MembersPage from './pages/tables/products';
 import VirtualizedTablePage from './pages/tables/virtualized';
 import FormBasicPage from './pages/forms/basic';
 import FormWizardPage from './pages/forms/wizard';

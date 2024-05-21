@@ -15,7 +15,7 @@ import { mockUsers } from '@/data/mock';
 import { NameCell, CheckCell, ActionCell } from './Cells';
 
 
-const data = mockUsers(20);
+const data = mockUsers(2);
 
 const { Column, HeaderCell, Cell } = Table;
 const { getHeight } = DOMHelper;     
@@ -134,7 +134,7 @@ const DataTable = () => {
 
         <Column width={120} sortable>
           <HeaderCell>Price</HeaderCell>
-          <Cell dataKey="Price">{rowData => `MVR ${rowData.amount}`}</Cell>
+          <Cell dataKey="Price">{rowData => `MVR ${rowData.price}`}</Cell>
         </Column>
 
         <Column width={120}>
